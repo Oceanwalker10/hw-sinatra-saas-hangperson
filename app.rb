@@ -22,8 +22,7 @@ class HangpersonApp < Sinatra::Base
   end
   
   get '/new' do
-    erb :new
-    
+    erb :new  
   end
   
   post '/create' do
@@ -47,7 +46,7 @@ class HangpersonApp < Sinatra::Base
     rescue
         flash[:message] = "invalid guess."
     end
-    redirect '/show'
+        redirect '/show'
   end
   
   # Everytime a guess is made, we should eventually end up at this route.
@@ -58,11 +57,11 @@ class HangpersonApp < Sinatra::Base
   get '/show' do
     case @game.check_win_or_lose
         when :play
-        erb :show
+            erb :show
         when :win 
-        redirect '/win'
+            redirect '/win'
         when :lose
-        redirect '/lose'
+            redirect '/lose'
     end
   end
   
