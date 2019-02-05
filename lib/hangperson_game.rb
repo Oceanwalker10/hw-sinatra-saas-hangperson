@@ -8,9 +8,43 @@ class HangpersonGame
   # def initialize()
   # end
   
-  def initialize(word)
-    @word = word
-  end
+    attr_accessor :word
+    attr_accessor :guesses
+    attr_accessor :wrong_guesses 
+    
+    def initialize(word)
+        @word = word
+        @guesses = ''
+        @wrong_guesses = ''
+    end
+        
+    def guess(letters)
+        raise ArgumentError if letters == ""
+        raise ArgumentError if letters !~ %r{[a-zA-Z0-9]}
+        letters.downcase!
+        if @word.include?(letters)
+            !@guesses.include?(letters) ? @guesses << letters : false
+        else
+            @wrong_guesses.include?(letters) ? false : wrong_guesses << letters
+        end
+    end
+        
+    def check_win_or_lose
+        if ( @wrong_guesses.length ==  7 ) 
+            :lose
+        elsif ( !self.word_with_guesses.include?("-") )
+            :win
+        else
+            :play
+        end
+    end
+        
+    def word_with_guesses
+        guesses_list = @guesses.to_s
+        guesses_rx = /[^ #{guesses_list}]/
+        @masked = @word.gsub(guesses_rx, "-")
+        @masked.scan(/[a-z\-]/).join
+    end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
   # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word

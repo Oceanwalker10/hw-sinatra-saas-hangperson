@@ -8,54 +8,8 @@ describe HangpersonGame do
       game.guess(letter)
     end
   end
-    
-    class HangpersonGame
-        attr_accessor :word
-        attr_accessor :guesses
-        attr_accessor :wrong_guesses
-    
-        def initialize(word)
-            @word = word
-            @guesses = ''
-            @wrong_guesses = ''
-        end
-        
-        def guess(letters)
-            raise ArgumentError if letters == ""
-            raise ArgumentError if letters !~ %r{[a-zA-Z0-9]}
-            letters.downcase!
-            if @word.include?(letters)
-                !@guesses.include?(letters) ? @guesses << letters : false
-            else
-                @wrong_guesses.include?(letters) ? false : wrong_guesses << letters
-            end
-        end
-        
-        def check_win_or_lose
-            if ( @wrong_guesses.length ==  7 ) 
-                :lose
-            elsif ( !self.word_with_guesses.include?("-") )
-                :win
-            else
-                :play
-            end
-        end
-        
-        def word_with_guesses
-            guesses_list = @guesses.to_s
-            guesses_rx = /[^ #{guesses_list}]/
-            @masked = @word.gsub(guesses_rx, "-")
-            @masked.scan(/[a-z\-]/).join
-        end
-        
-        # Generate random world
-        def self.get_random_word
-            require 'uri'
-            require 'net/http'
-            uri = URI('http://watchout4snakes.com/wo4snakes/Random/RandomWord')
-            Net::HTTP.post_from(uri ,{}).body
-        end
-    end
+   
+       
     
   describe 'new' do
     it "takes a parameter and returns a HangpersonGame object" do      
